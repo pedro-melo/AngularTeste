@@ -1,0 +1,49 @@
+﻿<div *ngIf="!listView">
+    <h1>Restaurantes</h1>
+    <div class="options well">
+        <div class="form-group" [formGroup]="formSearch">
+            <label>Nome:</label>
+            <input type="text" class="form-control" formControlName="search" />
+        </div>
+        <button class="btn btn-default" (click)="buscar()">Pesquisar</button>
+        <button class="btn btn-info" (click)="cadastrar()">Adicionar Restaurante</button>
+    </div>
+    <p *ngIf="!restaurantes"><em>Sem dados...</em></p>
+    <table class='table' *ngIf="restaurantes">
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of restaurantes">
+                <td>
+                    <button class="btn btn-primary btn-xs" (click)="editar(item)"><i class="glyphicon glyphicon-pencil"></i></button>
+                </td>
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td>
+                    <button class="btn btn-danger btn-xs" (click)="remover(item.id)"><i class="glyphicon glyphicon glyphicon-remove"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div *ngIf="listView">
+    <h1>{{label}}</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" class="form-control" formControlName="name" />
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-danger" (click)="cancelar()">Voltar</button>
+        <button class="btn btn-success" type="submit">Salvar</button>
+    </form>
+</div>

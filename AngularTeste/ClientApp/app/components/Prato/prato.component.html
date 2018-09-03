@@ -1,0 +1,62 @@
+﻿<div *ngIf="!addEditForm">
+    <h1>
+        Pratos
+        <button class="btn btn-success pull-right" (click)="cadastrar()"><i class="glyphicon-plus"></i> Novo Prato</button>
+    </h1>
+    <hr />
+    <p *ngIf="!pratos"><em>Nenhum prato encontrado...</em></p>
+    <table class='table' *ngIf="pratos">
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>Restaurante</th>
+                <th>Prato</th>
+                <th>Preço</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of pratos">
+                <td>
+                    <button class="btn btn-primary btn-xs" (click)="editar(item)"><i class="glyphicon glyphicon-pencil"></i></button>
+                    <button class="btn btn-danger btn-xs" (click)="remover(item.id)"><i class="glyphicon glyphicon glyphicon-remove"></i></button>
+                </td>
+                <td>{{ item.restaurante.name }}</td>
+                <td>{{ item.name }}</td>
+                <td>R$ {{ item.price | number : '1.2' }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div *ngIf="addEditForm">
+    <h1>{{label}}</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Restaurante</label>
+                    <select class="form-control" formControlName="restauranteId">
+                        <option *ngFor="let restaurante of restaurantes" value="{{restaurante.id}}">{{restaurante.name}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" class="form-control" formControlName="name" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>Preço</label>
+                    <input type="number" class="form-control" formControlName="price" />
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-danger" (click)="cancelar()">Cancelar</button>
+        <button class="btn btn-success" [disabled]="!form.valid" type="submit">Salvar</button>
+    </form>
+</div>
